@@ -102,6 +102,7 @@ environments:
         dataSource:
             dbCreate: create-drop
             url: jdbc:mysql://localhost:3306/todo
+            logSql: true
     test:
         dataSource:
             dbCreate: update

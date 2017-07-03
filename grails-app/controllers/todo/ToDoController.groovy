@@ -7,44 +7,53 @@ class ToDoController {
     def index(){
 
         println("todo index")
-//        render (view:'dashboard')
         render "hello"
     }
-
-    def save(String title,String email){
-
+;
+    def save(String title,String email,Integer priority){
 
         println("title->"+title)
         println("email->"+email)
 
-      /*  def list=ToDo.list().priority
-
-        Integer i
-        for(i=1;i<10;i++)
-
-
-        println("list of priority----->"+list)
-*/
-       // Integer i=0
-        ToDo toDo = new ToDo(title: title,email:session.email)
+        ToDo toDo = new ToDo(title: title,email:session.email,priority: priority)
 
         if(toDo.validate()){
 
-            toDo.save(flush:true)
+            if(toDo.save(flush:true)){
+                render(["success": true, data: toDo ] as JSON)
+            } else{
+                render(["success": false, data: null ] as JSON)
+            }
+        } else{
+            render(["success": false, data: null ] as JSON)
         }
+    }
 
-        render(["success": true ] as JSON)
-
-
+    def updatePriority(int id, int priority){
+        ToDo todo = ToDo.get(id)
+        todo.priority = priority
+        todo.save(flush: true)
+        render(["success": true] as JSON)
     }
 
     def getTodoList(String email){
 
-        List<ToDo> list =ToDo.findAllByEmail(email)
+        List<ToDo> list =ToDo.findAllByEmail(email, [sort: 'priority', order: 'asc'])
 
         println("email-->"+email)
         println("list-->"+list)
-        render list as JSON
+
+//        def priorityCounter = ToDo.createCriteria().list {
+//            eq("email", email)
+//            order("priority", "desc")
+//            maxResults(1)
+//        }
+        def priorityCounter = ToDo.where{email == email}.list(sort: 'priority', order: 'desc', max: 1, offset: 0).priority
+        def res = [
+                "lastPriority": priorityCounter,
+                "data": list
+        ]
+        render res as JSON
     }
 
    /* def markRead(String title,String email,Boolean read){

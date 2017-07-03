@@ -5,11 +5,11 @@ class ToDo {
 
     String title
     String email
-  //  Integer priority
- //   Boolean read=false
+    Integer priority
 
     static constraints = {
 
         title blank: false,minSize: 3
+        priority nullable:false, default: 0
     }
 }

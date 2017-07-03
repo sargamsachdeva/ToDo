@@ -6,15 +6,6 @@ class UserController {
 
     def index() {
 
-        println("in index-->"+session.email)
-        /*if (session.email) {
-
-            render(view: 'index1', model: [loggedInEmail: session.email])
-
-        } else {
-           // render(view: 'index1')
-        }*/
-
         if(session.user){
 
         }

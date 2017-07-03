@@ -32,7 +32,7 @@
 </script>
 </head>
 <body>
-<div class="container" ng-controller="UserController" >
+<div class="container" ng-controller="UserController" ng-init="init()">
     <div class="jumbotron todo-header">
         <h1>TODO App</h1>
     </div>
@@ -99,7 +99,7 @@
             <div class="panel-heading">
                 <span class="panel-title">My Todos</span>
             </div>
-            <div class="panel-body" ui-sortable ng-model="todoList">
+            <div class="panel-body" ui-sortable="sortableOptions" ng-model="todoList">
             <div ng-repeat="todo in todoList track by $index">
        %{-- <input type="checkbox" ng-model="x.done"> <span ng-bind="x.todoText"></span>
             <button ng-click="delete()">x</button>--}%
