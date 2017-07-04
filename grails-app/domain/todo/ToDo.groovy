@@ -5,6 +5,7 @@ class ToDo {
 
     String title
     String email
+    String password
     Integer priority
 
     static constraints = {

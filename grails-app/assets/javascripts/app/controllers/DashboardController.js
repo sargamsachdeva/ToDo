@@ -1,53 +1,21 @@
+app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootScope", function ($scope, $http, UserService, $rootScope) {
 
-app.controller('UserController', ["$scope", "$http", "UserService", "$rootScope", function ($scope, $http, UserService, $rootScope) {
 
-/*
-    $scope.loggedInEmail = userData ? userData.loggedInEmail : "";
-    $scope.loggedInPassword = userData ? userData.loggedInPassword : "";
+    /*$scope.loggedInEmail = userData ? userData.loggedInEmail : "";
+    $scope.loggedInPassword = userData ? userData.loggedInPassword : "";*/
+
+    $scope.userEmail = UserService.getEmail();
+    $scope.userPassword = UserService.getPassword();
     $scope.i = 1;
 
 
     $scope.init = function () {
-        if ($scope.loggedInEmail) {
+        if ($scope.userEmail) {
             $scope.getAllTodos();
         }
     };
 
-   /!* $scope.login = function () {
 
-        $http
-            .post("/user/login?email=" + $scope.email + "&&password=" + $scope.password)
-            .then(function (response) {
-
-                $scope.loggedInEmail = response.data.email;
-                $scope.loggedInPassword = response.data.password;
-                console.log("email-->login", response.data.email);
-                console.log("password-->login", response.data.password);
-                $scope.getAllTodos();
-            }).catch(function (e) {
-            console.log('Error: ', e);
-
-
-        });
-    };
-
-    $scope.logout = function () {
-
-        $http
-            .post("/user/logout?email=" + $scope.email)
-            .then(function (response) {
-
-                //  alert("success logout")
-                ($scope.loggedInEmail) = response.data.email;
-                console.log("email-->logout", response.data.email)
-                //alert("success logout")
-
-            }).catch(function (e) {
-            console.log('Error: ', e);
-
-        });
-    };
-*!/
     $scope.todoList = [];
 
     $scope.add = function () {
@@ -69,18 +37,20 @@ app.controller('UserController', ["$scope", "$http", "UserService", "$rootScope"
                         priority: response.data.data.priority,
                         password: response.data.data.password
                     });
+                    /*UserService.addTodo(response.data.data.title,false,response.data.data.id,
+                    response.data.data.priority,response.data.data.password);*/
                 } else {
                     alert("tech issue")
                 }
             });
-        /!*
+        /*
          } else {
          alert("cannot add task when user is logout");
          }
-         *!/
+         */
     };
 
-    /!*$scope.markRead = function () {
+    /*$scope.markRead = function () {
 
      if($scope.read){
 
@@ -92,15 +62,15 @@ app.controller('UserController', ["$scope", "$http", "UserService", "$rootScope"
      });  //return successFun(success)
      }
      };
-     *!/
+     */
 
     $scope.getAllTodos = function () {
 
-        if ($scope.loggedInEmail) {
-            $http.get("/toDo/getTodoList?email=" + $scope.loggedInEmail)
+        if ($scope.userEmail) {
+            $http.get("/toDo/getTodoList?email=" + $scope.userEmail)
                 .then(function (response) {
 
-                    console.log("loggedinemail-->", $scope.loggedInEmail);
+                    console.log("loggedinemail-->", $scope.userEmail);
                     console.log("listtttttttttt-->", response.data);
                     //     $scope.i = (response.data.lastPriority<0)?1:response.data.lastPriority;
                     $scope.i = (response.data.lastPriority > 0) ? parseInt(response.data.lastPriority) + 1 : 1;
@@ -121,27 +91,23 @@ app.controller('UserController', ["$scope", "$http", "UserService", "$rootScope"
     $scope.delete = function (todo) {
 
         $scope.todoList.splice(this.$index, 1);
+        UserService.removeTodo(todo)
     };
 
 
-    $scope.edit = function (todo, editTodo) {
-        todo.title = editTodo.title;
+    $scope.edit = function () {
+        UserService.editTodos(todo,editTodo)
     };
 
     $scope.getTotalTodos = function () {
+
+       // UserService.getTodosLength();
         return $scope.todoList.length;
     };
 
     $scope.sortableOptions = {
         stop: function (e, ui) {
-            // var item = ui.todo.$scope.todoList.scope().$scope.todoList;
-            // var fromIndex = ui.$scope.todoList.sortable.index;
-            // var toIndex = ui.$scope.todoList.sortable.dropindex;
-            //    var item = ui.item.scope().todo;
-            /!* var item = ui.item.scope().todo;
-             var toIndex = ui.item.sortable.index;
-             var fromIndex = ui.item.sortable.dropindex;
-             console.log('moved', item, fromIndex, toIndex);*!/
+
             $.each($scope.todoList, function (idx, val) {
                 $http.get("/toDo/updatePriority?id=" + val.id + "&priority=" + (idx + 1))
                     .then(function (response) {
@@ -151,15 +117,4 @@ app.controller('UserController', ["$scope", "$http", "UserService", "$rootScope"
         }
     };
 
-    /!*$scope.try = function () {
-     $scope.r = $scope.todo.read;
-
-     console.log("this is working--"+$scope.todo.r);
-     };
-
-     $scope.try();
-     *!/
- */
 }]);
-
-console.log(app);

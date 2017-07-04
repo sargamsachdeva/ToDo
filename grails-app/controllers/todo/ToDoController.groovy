@@ -10,12 +10,13 @@ class ToDoController {
         render "hello"
     }
 ;
-    def save(String title,String email,Integer priority){
+    def save(String title,String email,Integer priority,String password){
 
         println("title->"+title)
         println("email->"+email)
+        println("password is---->>"+password)
 
-        ToDo toDo = new ToDo(title: title,email:session.email,priority: priority)
+        ToDo toDo = new ToDo(title: title,email:session.email,priority: priority,password: session.password)
 
         if(toDo.validate()){
 
@@ -56,6 +57,18 @@ class ToDoController {
         render res as JSON
     }
 
+    def delete(int id) {
+
+        ToDo toDo = ToDo.get(id)
+
+        if(toDo) {
+            toDo.delete(flush: true)
+            render(["success": true,data:toDo] as JSON)
+        }
+        else{
+            render(["success": false,data:null ] as JSON)
+        }
+    }
    /* def markRead(String title,String email,Boolean read){
 
         println("in markRead")

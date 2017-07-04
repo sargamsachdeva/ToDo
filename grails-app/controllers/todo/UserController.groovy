@@ -11,20 +11,22 @@ class UserController {
         }
 
         else{
-            render(view: 'index1', model: [loggedInEmail: session.email])
+            render(view: 'index1', model: [loggedInEmail: session.email,loggedInPassword:session.password])
         }
     }
 
-    def login(String email){
+    def login(String email,String password){
 
         println("email:-"+email)
         println("---------------")
+        println("password:-"+password)
 
         session.email = email
+        session.password=password
 
        // response.sendError(500)
 
-        render(["success": true, email: email ] as JSON)
+        render(["success": true, email: email,password:password] as JSON)
 
         //response<<"success"
         //forward(controller: 'toDo', action: 'index',params:[email:email])
@@ -40,13 +42,14 @@ class UserController {
         render(["success": true,email: session.email] as JSON)
     }
 
-   def trying(String email){
+   def login1(String email){
+       session.email = email
 
-       email=session.email
-      def u= ToDo.findByEmail(email).email
-
-       println("in trying-->"+u)
-
-       render ([u:u] as JSON)
+       render (view:'login1',model: [loggedInEmail: session.email])
    }
+    def dashboard(){
+
+        render(view:'dashboard')
+    }
+
 }

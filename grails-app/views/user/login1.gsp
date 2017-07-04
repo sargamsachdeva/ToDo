@@ -3,90 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <title>TODO App</title>
-    <asset:stylesheet href="bootstrap.css"/>
-    <asset:stylesheet href="bootstrap-theme.min.css"/>
-    <asset:stylesheet href="font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    %{--
+        <asset:stylesheet href="bootstrap.css"/>
+        <asset:stylesheet href="bootstrap-theme.min.css"/>
+        <asset:stylesheet href="font-awesome.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <asset:stylesheet href="style.css"/>
-    <asset:javascript src="jquery-2.2.0.min.js"/>
-    <asset:javascript src="angular.min.js"/>
-    <asset:javascript src="app/app.js"/>
-    <asset:javascript src="bootstrap.js"/>
-    <asset:javascript src="app/controllers/UserController.js"/>
-    <asset:javascript src="app/controllers/LoginController.js"/>
-    <asset:javascript src="app/controllers/DashboardController.js"/>
-    <asset:javascript src="app/service/UserService.js"/>
-    <asset:javascript src="app/angular-ui-router.js"/>
-    <asset:javascript src="app/angular-ui-router.min.js"/>
-    <asset:javascript src="app/sortable.js"/>
-    <script
-            src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
-            integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
-            crossorigin="anonymous"></script>
+        <asset:stylesheet href="style.css"/>
+        <asset:javascript src="jquery-2.2.0.min.js"/>
+        <asset:javascript src="angular.min.js"/>
+        <asset:javascript src="app/app.js"/>
+        <asset:javascript src="bootstrap.js"/>
+        <asset:javascript src="app/controllers/UserController.js"/>
+        <asset:javascript src="app/service/UserService.js"/>
+        <asset:javascript src="app/angular-ui-router.js"/>
+        <asset:javascript src="app/angular-ui-router.min.js"/>
+        <asset:javascript src="app/sortable.js"/>
 
-    <script>
+        <script
+                src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+                integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+                crossorigin="anonymous"></script>
+    --}%
 
-    var userData = {
-        loggedInEmail: "${raw(loggedInEmail)}"
-    }
+%{--<script>
+
+var userData = {
+    loggedInEmail: "${raw(loggedInEmail)}",
+    loggedInPassword: "${raw(loggedInPassword)}"
+}
 
 </script>
-</head>
+--}%</head>
+
 <body>
-
-    <nav class="navbar navbar-inverse" role="navigation">
-        <div class="navbar-header">
-            <a class="navbar-brand" ui-sref="#">TODO Application</a>
-            <a class="navbar-brand pull-right" ui-sref="login1">Login</a>
-        </div>
-    </nav>
-
 <div class="container">
-%{--content injected here--}%
-    <div class="jumbotron todo-header" style="background-color: #1b6d85">
-        <h1 style="margin-left: 250px">ToDo App</h1>
-    </div>
 
-    <ui-view></ui-view>
-
-</div>
-    %{--<a ui-sref="login1">Login</a>
-    <ui-view></ui-view>
---}%    %{--<ui-view></ui-view>--}%
-%{--<div ui-view="dashboard"></div>--}%
-   %{-- <div class="jumbotron todo-header">
-        <h1>TODO App</h1>
-    </div>--}%
-  %{--  <div class="col-md-6">
-        <div class="panel panel-default">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
             <div class="panel-heading todo-heading">
                 <span class="panel-title">Login</span>
             </div>
+
             <div class="panel panel-body todo-body">
-                <a ui-sref="dashboard">dashboard</a>
-                <form class="form-horizontal" name="todoForm" id="todoForm" >
+                <form class="form-horizontal" name="todoForm" id="todoForm">
                     <div class="form-group" ng-class="{ 'has-error' : todoForm.email.$invalid}">
                         <label for="email" class="control-label col-xs-3">Email:-</label>
+
                         <div class="col-xs-6 col-xs-offset-1">
                             <input type="text" class="form-control" name="email" ng-model="email" id="email"
                                    placeholder="Email" ng-required="true" type="email" ng-hide="loggedInEmail">
+
                             <p class="form-control-static" ng-show="loggedInEmail">{{loggedInEmail}}</p>
                         </div>
                     </div>
+
+                    <div class="form-group" ng-class="{ 'has-error' : todoForm.password.$invalid}">
+                        <label for="password" class="control-label col-xs-3">Password:-</label>
+
+                        <div class="col-xs-6 col-xs-offset-1">
+                            <input type="password" class="form-control" name="password" ng-model="password"
+                                   id="password"
+                                   placeholder="Password" ng-required="true" ng-hide="loggedInPassword">
+
+                            %{--<p class="form-control-static" ng-show="loggedInPassword">{{loggedInPassword}}</p>--}%
+                        </div>
+                    </div>
+
                     <div class="col-xs-offset-4 col-md-6" ng-hide="loggedInEmail">
-                        <button class="btn btn-block btn-success" type="submit" ng-click="login()" ui-view="dashboard" ng-disabled="todoForm.$invalid">Login
+                        <button class="btn btn-block btn-success" type="submit" ng-click="login()" ui-sref="dashboard"
+                                ng-disabled="todoForm.$invalid">Login
                         </button>
                     </div>
-                    <div class="col-xs-offset-4 col-md-6" ng-show="loggedInEmail">
-                        <button class="btn btn-block btn-danger" type="submit" ng-click="logout()" >Logout
+
+                    %{--<div class="col-xs-offset-4 col-md-6" ng-show="loggedInEmail">
+                        <button class="btn btn-block btn-danger" type="submit" ng-click="logout()">Logout
                         </button>
-                    </div>
+                    </div>--}%
                 </form>
             </div>
         </div>
---}%
 
+        %{--<ui-view></ui-view>--}%
 
 
         %{-- <div class="panel panel-default">
@@ -113,12 +111,12 @@
              </div>
          </div>
  --}%
-    %{--</div>--}%
-
-   %{-- <div class="todo-wrapper">
-        <h2>You've got <span class="emphasis">{{getTotalTodos()}}</span> things to do</h2>
     </div>
---}%
+
+    %{-- <div class="todo-wrapper">
+         <h2>You've got <span class="emphasis">{{getTotalTodos()}}</span> things to do</h2>
+     </div>
+ --}%
 
     %{--<div class="col-xs-6">
         <div class="panel panel-default">
@@ -237,6 +235,6 @@
         </div>
 
     </div>--}%
-
+</div>
 </body>
 </html>
