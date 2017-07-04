@@ -134,31 +134,16 @@
                                        aria-hidden="true" title="Edit"> </a>
                                 </div>
 
-                                %{--
-                                                        <div class="row" >
-                                                            <span ng-hide="todo.read">
-                                                            <input type="checkbox" ng-model="todo.read.value1" title="UnRead">
-                                                        </span>
-
-                                                        <span ng-show="todo.read">
-                                                            <input type="checkbox" ng-model="todo.read.value2" title="Read">
-                                                        </span>
-                                                        {{title}}
-
-                                                        <a ng-click="todo.editTask=true" class="fa fa-pencil-square fa-lg pull-right"
-                                                           aria-hidden="true" title="Edit"> </a>
-                                                    </div>
-                                --}%
                             </div>
 
                             <div ng-show="todo.editTask">
-                                <form ng-submit="todo.editTask = false" name="editTodo" class="editForm form-group">
+                                <form ng-submit="edit(todo)" name="editTodo" class="editForm form-group">
 
-                                    <input type="text" ng-model="title" value={{title1}} placeholder={{title1}}
+                                    <input type="text" ng-model="todo.todoText" value={{todo.todoText}} placeholder={{odo.todoText}}
                                            class="form-control form-group"
                                            ng-required="true"
                                            id="title-todo">
-                                    <button class="btn btn-success btn-block" type="submit" ng-click="edit(todo)">Edit</button>
+                                    <button class="btn btn-success btn-block" type="submit" >Edit</button>
                                 </form>
                             </div>
                         </div>

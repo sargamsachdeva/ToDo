@@ -1,11 +1,10 @@
-app.controller('LoginController', ["$scope", "$http", "UserService", "$rootScope", function ($scope, $http, UserService, $rootScope) {
+app.controller('LoginController', ["$scope", "$http", "UserService", "$location", "$rootScope", function ($scope, $http, UserService, $location, $rootScope) {
 
     // $scope.loggedInEmail = userData ? userData.loggedInEmail : "";
     $scope.userEmail = UserService.getEmail();
     $scope.userPassword = UserService.getPassword();
     // $scope.loggedInPassword = userData ? userData.loggedInPassword : "";
     $scope.i = 1;
-
 
     $scope.login = function () {
 
@@ -18,6 +17,7 @@ app.controller('LoginController', ["$scope", "$http", "UserService", "$rootScope
                 console.log("email-->login", response.data.email);
                 console.log("myyyyyemail-->login", $scope.userEmail);
                 console.log("password-->login", response.data.password);
+                $rootScope.loggedInEmail = response.data.email;
     //            $scope.getAllTodos();
             }).catch(function (e) {
             console.log('Error: ', e);
@@ -27,7 +27,9 @@ app.controller('LoginController', ["$scope", "$http", "UserService", "$rootScope
     };
 
     $scope.logout = function () {
-
+        if(!$rootScope.loggedInEmail){
+            $location.path("/user/login1");
+        }
         $http
             .post("/user/logout?email=" + $scope.email)
             .then(function (response) {

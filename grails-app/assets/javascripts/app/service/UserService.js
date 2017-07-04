@@ -2,11 +2,11 @@ app.factory('UserService', [function () {
 
     var loggedInEmail = userData ? userData.loggedInEmail : "";
     var loggedInPassword = userData ? userData.loggedInPassword : "";
-   // var todoList = [];
-    this.todoList=[{
+    var todoList = [];
+   /* this.todoList=[{
         text1: 'Hello',
         text2: 'world'
-    }];
+    }];*/
 
    /* var _todos = [];
     this.addTodo = function (todo) {
@@ -25,30 +25,40 @@ app.factory('UserService', [function () {
        return loggedInPassword;
    };
 
-  /* this.addTodo = function (todoText,done,id,priority,password) {
+   this.addTodo = function (todoText,done,id,priority,password) {
 
        console.log("in service todoText",todoText);
-        todoList.push([todoText,done,id,priority,password]);
+       var obj = {todoText:todoText,done:done,id:id,priority:priority,password:password};
+        todoList.push(obj);
+        console.log("in service todolist-->>",this.todoList)
+   };
 
-   };*/
-
-  this.addTodo = function (text) {
+  /*this.addTodo = function (text) {
 
         this.todoList.push(text)
-    };
+    };*/
 
    this.removeTodo = function (todo) {
-
-       console.log("removing-->"+todoList.splice(this.$index, 1));
-       return todoList.splice(this.$index, 1);
+       console.log(todo);
+       console.log(todoList);
+       for(var i =0;i<todoList.length; i++){
+           if(todoList[i].id==todo.id){
+               todoList.splice(i, 1); //zero
+               return todoList;
+           }
+       }
    };
 
     this.editTodos = function (todo, editTodo) {
 
        /* console.log("todo title-->>",todo.title);
         console.log("edit todo title-->>",editTodo.title);*/
-        todo.title = editTodo.title;
-        return todo.title;
+
+        $.each(todoList, function(idx, val){
+            if(val.todoText==todo.todoText){
+                return todo.title = editTodo.title;; //zero based
+            }
+        })
     };
 
     this.getTodosLength = function () {
@@ -56,6 +66,10 @@ app.factory('UserService', [function () {
         console.log("in service todolist length",todoList.length);
         return todoList.length;
     };
+
+    this.getAllTodos = function(){
+        return todoList;
+    }
 
     return this
 }]);

@@ -25,20 +25,30 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
 
         console.log("list:----", $scope.todoList);
         console.log("read:----" + priority);
+        var obj  = {
+            "title": $scope.title1,
+            "email": $scope.email,
+            "priority" : priority,
+            "password": $scope.password
+        }
         $http
-            .post("/toDo/save?title=" + $scope.title1 + "&&email=" + $scope.email + "&&priority=" + (priority) + "&&password=" + $scope.password)
+            .post("/toDo/save", JSON.stringify(obj))
             .then(function (response) {
                 console.log(response);
                 if (response.data.success) {
-                    $scope.todoList.push({
+                  /*  $scope.todoList.push({
                         todoText: response.data.data.title,
                         done: false,
                         id: response.data.data.id,
                         priority: response.data.data.priority,
                         password: response.data.data.password
-                    });
-                    /*UserService.addTodo(response.data.data.title,false,response.data.data.id,
-                    response.data.data.priority,response.data.data.password);*/
+                    });*/
+
+                  UserService.addTodo(response.data.data.title,false,response.data.data.id,
+                    response.data.data.priority,response.data.data.password);
+                  console.log(UserService.getTodosLength());
+                  console.log(UserService.getAllTodos());
+                  $scope.todoList = UserService.getAllTodos();
                 } else {
                     alert("tech issue")
                 }
@@ -50,19 +60,19 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
          */
     };
 
-    /*$scope.markRead = function () {
 
-     if($scope.read){
+    $scope.read = false;
+    $scope.markRead = function () {
 
-     $http
-     .post("/toDo/markRead?title="+$scope.title1+"&&email="+$scope.email+"&&read="+$scope.read)
-     .then(function(success) {
+         if($scope.read){
+             $http
+             .post("/toDo/markRead?title="+$scope.title1+"&&email="+$scope.email+"&&read="+$scope.read)
+             .then(function(success) {
 
-     //  alert("success task");
-     });  //return successFun(success)
-     }
+             //  alert("success task");
+             });  //return successFun(success)
+         }
      };
-     */
 
     $scope.getAllTodos = function () {
 
@@ -76,12 +86,16 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
                     $scope.i = (response.data.lastPriority > 0) ? parseInt(response.data.lastPriority) + 1 : 1;
                     $scope.todoList = [];
                     $.each(response.data.data, function (idx, value) {
-                        $scope.todoList.push({
-                            todoText: value.title,
-                            done: false,
-                            id: value.id,
-                            priority: value.priority
-                        });
+                        // $scope.todoList.push({
+                        //     todoText: value.title,
+                        //     done: false,
+                        //     id: value.id,
+                        //     priority: value.priority
+                        // });
+
+                        UserService.addTodo(value.title,false,value.id,
+                            value.priority,$scope.userPassword);
+                        $scope.todoList = UserService.getAllTodos();
                     });
                 })
         }
@@ -90,19 +104,38 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
 
     $scope.delete = function (todo) {
 
-        $scope.todoList.splice(this.$index, 1);
-        UserService.removeTodo(todo)
+     //   $scope.todoList.splice(this.$index, 1);
+        console.log(todo);
+        $scope.todoList = UserService.removeTodo(todo)
+        $http.get("/toDo/delete?id=" + todo.id)
+            .then(function (response) {
+                console.log(response);
+            });
+        //ye vala $.each htadu? //there??
+        $.each($scope.todoList, function (idx, val) {
+            $http.get("/toDo/updatePriority?id=" + val.id + "&priority=" + (idx + 1))
+                .then(function (response) {
+                    console.log(response);
+                });
+        });
     };
 
 
-    $scope.edit = function () {
-        UserService.editTodos(todo,editTodo)
+    $scope.edit = function (todo) {
+        todo.editTask = false;
+        console.log('editing todo');
+        console.log(todo);
+        UserService.editTodos(todo,editTodo);
+        $http.get("/toDo/edit?id=" + todo.id+"&text="+todo.todoText)
+        .then(function (response) {
+            console.log(response);
+        });
     };
 
     $scope.getTotalTodos = function () {
 
        // UserService.getTodosLength();
-        return $scope.todoList.length;
+        return ($scope.todoList)?$scope.todoList.length: UserService.getTodosLength();
     };
 
     $scope.sortableOptions = {
