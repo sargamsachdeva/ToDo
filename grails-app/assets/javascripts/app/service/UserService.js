@@ -3,16 +3,6 @@ app.factory('UserService', [function () {
     var loggedInEmail = userData ? userData.loggedInEmail : "";
     var loggedInPassword = userData ? userData.loggedInPassword : "";
     var todoList = [];
-   /* this.todoList=[{
-        text1: 'Hello',
-        text2: 'world'
-    }];*/
-
-   /* var _todos = [];
-    this.addTodo = function (todo) {
-
-        return _todos.push(todo);
-    };*/
 
    this.getEmail = function () {
 
@@ -33,11 +23,6 @@ app.factory('UserService', [function () {
         console.log("in service todolist-->>",this.todoList)
    };
 
-  /*this.addTodo = function (text) {
-
-        this.todoList.push(text)
-    };*/
-
    this.removeTodo = function (todo) {
        console.log(todo);
        console.log(todoList);
@@ -51,12 +36,9 @@ app.factory('UserService', [function () {
 
     this.editTodos = function (todo, editTodo) {
 
-       /* console.log("todo title-->>",todo.title);
-        console.log("edit todo title-->>",editTodo.title);*/
-
         $.each(todoList, function(idx, val){
             if(val.todoText==todo.todoText){
-                return todo.title = editTodo.title;; //zero based
+                return todo.title = editTodo.title;
             }
         })
     };
@@ -69,7 +51,7 @@ app.factory('UserService', [function () {
 
     this.getAllTodos = function(){
         return todoList;
-    }
+    };
 
     return this
 }]);

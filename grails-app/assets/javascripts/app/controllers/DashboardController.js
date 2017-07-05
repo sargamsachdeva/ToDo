@@ -30,7 +30,7 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
             "email": $scope.email,
             "priority" : priority,
             "password": $scope.password
-        }
+        };
         $http
             .post("/toDo/save", JSON.stringify(obj))
             .then(function (response) {
@@ -53,11 +53,6 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
                     alert("tech issue")
                 }
             });
-        /*
-         } else {
-         alert("cannot add task when user is logout");
-         }
-         */
     };
 
 
@@ -106,12 +101,11 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
 
      //   $scope.todoList.splice(this.$index, 1);
         console.log(todo);
-        $scope.todoList = UserService.removeTodo(todo)
+        $scope.todoList = UserService.removeTodo(todo);
         $http.get("/toDo/delete?id=" + todo.id)
             .then(function (response) {
                 console.log(response);
             });
-        //ye vala $.each htadu? //there??
         $.each($scope.todoList, function (idx, val) {
             $http.get("/toDo/updatePriority?id=" + val.id + "&priority=" + (idx + 1))
                 .then(function (response) {
