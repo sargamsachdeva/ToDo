@@ -1,4 +1,4 @@
-var app = angular.module('toDoApp', ['ui.sortable', 'ui.router']);
+var app = angular.module('toDoApp', ['ui.sortable', 'ui.router','ngResource']);
 
 /*
  .config([
@@ -17,12 +17,12 @@ var app = angular.module('toDoApp', ['ui.sortable', 'ui.router']);
  }]);*/
 
 
-app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+app.config(function ($stateProvider, $urlRouterProvider) {
 
 
     $urlRouterProvider
-    //any url that doesn't exist in routes redirect to '/'
-        .otherwise('/user/dashboard');
+
+        .otherwise('/user/login1');
 
     $stateProvider
         .state({
@@ -36,17 +36,30 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $htt
             url: '/user/login1',
             templateUrl: '/user/login1.html',
             controller: 'LoginController'
-        });
-}).run(function($rootScope, $location) {
-    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
-        if ($rootScope.loggedInEmail == null) {
-            // no logged user, redirect to /login
-            if ( next.templateUrl === "/user/login1.html") {
-            } else {
-                $location.path("/user/login1");
-            }
-        } else{
-            $location.path("/user/dashboard");
-        }
-    });
+        })
 });
+
+
+
+
+
+
+
+
+
+
+
+
+/*.run(function($rootScope, $location) {
+ $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+ if ($rootScope.loggedInEmail == null) {
+ // no logged user, redirect to /login
+ if ( next.templateUrl === "/user/login1.html") {
+ } else {
+ $location.path("/user/login1");
+ }
+ } else{
+ $location.path("/user/dashboard");
+ }
+ });
+ });*/

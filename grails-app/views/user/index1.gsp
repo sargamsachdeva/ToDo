@@ -17,9 +17,13 @@
     <asset:javascript src="app/controllers/LoginController.js"/>
     <asset:javascript src="app/controllers/DashboardController.js"/>
     <asset:javascript src="app/service/UserService.js"/>
+    <asset:javascript src="app/service/ToDoService.js"/>
+    <asset:javascript src="app/service/LoginService.js"/>
     <asset:javascript src="app/angular-ui-router.js"/>
     <asset:javascript src="app/angular-ui-router.min.js"/>
     <asset:javascript src="app/sortable.js"/>
+    <asset:javascript src="app/angular-resource.js"/>
+    <asset:javascript src="app/angular-resource.min.js"/>
     <script
             src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
             integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="

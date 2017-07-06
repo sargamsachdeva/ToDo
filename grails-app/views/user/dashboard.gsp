@@ -139,7 +139,7 @@
                             <div ng-show="todo.editTask">
                                 <form ng-submit="edit(todo)" name="editTodo" class="editForm form-group">
 
-                                    <input type="text" ng-model="todo.todoText" value={{todo.todoText}} placeholder={{odo.todoText}}
+                                    <input type="text" ng-model="todo.todoText" value={{todo.todoText}} placeholder={{todo.todoText}}
                                            class="form-control form-group"
                                            ng-required="true"
                                            id="title-todo">

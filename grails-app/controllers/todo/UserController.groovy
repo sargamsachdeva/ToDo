@@ -15,18 +15,18 @@ class UserController {
         }
     }
 
-    def login(String email,String password){
-
-        println("email:-"+email)
+    def login(){
+        def obj = request.JSON
+        println("email:-"+obj.email)
         println("---------------")
-        println("password:-"+password)
+        println("password:-"+obj.password)
 
-        session.email = email
-        session.password=password
+        session.email = obj.email
+        session.password=obj.password
 
        // response.sendError(500)
 
-        render(["success": true, email: email,password:password] as JSON)
+        render(["success": true, email: obj.email,password:obj.password] as JSON)
 
         //response<<"success"
         //forward(controller: 'toDo', action: 'index',params:[email:email])

@@ -20,7 +20,7 @@ app.factory('UserService', [function () {
        console.log("in service todoText",todoText);
        var obj = {todoText:todoText,done:done,id:id,priority:priority,password:password};
         todoList.push(obj);
-        console.log("in service todolist-->>",this.todoList)
+        console.log("in service todolist-->>",todoList)
    };
 
    this.removeTodo = function (todo) {
@@ -28,7 +28,7 @@ app.factory('UserService', [function () {
        console.log(todoList);
        for(var i =0;i<todoList.length; i++){
            if(todoList[i].id==todo.id){
-               todoList.splice(i, 1); //zero
+               todoList.splice(i, 1);
                return todoList;
            }
        }

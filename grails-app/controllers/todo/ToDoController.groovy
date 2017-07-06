@@ -10,7 +10,7 @@ class ToDoController {
         render "hello"
     }
 ;
-    def save(){
+    def save() {
         def obj = request.JSON
         println("title->"+obj)
         println("email->"+obj.email)
@@ -69,12 +69,12 @@ class ToDoController {
             render(["success": false,data:null ] as JSON)
         }
     }
-    def edit(int id, String text) {
+    def edit(int id, String title) {
 
         ToDo toDo = ToDo.get(id)
 
         if(toDo) {
-            toDo.title = text
+            toDo.title = title
             toDo.save(flush: true)
             render(["success": true,data:toDo] as JSON)
         }

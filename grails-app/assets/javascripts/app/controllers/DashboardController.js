@@ -1,22 +1,17 @@
-app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootScope", function ($scope, $http, UserService, $rootScope) {
+app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootScope","ToDoService", function ($scope, $http, UserService, $rootScope,ToDoService) {
 
-
-    /*$scope.loggedInEmail = userData ? userData.loggedInEmail : "";
-    $scope.loggedInPassword = userData ? userData.loggedInPassword : "";*/
 
     $scope.userEmail = UserService.getEmail();
     $scope.userPassword = UserService.getPassword();
     $scope.i = 1;
-
+    $scope.todoList = [];
+    $scope.read= false;
 
     $scope.init = function () {
         if ($scope.userEmail) {
             $scope.getAllTodos();
         }
     };
-
-
-    $scope.todoList = [];
 
     $scope.add = function () {
 
@@ -36,13 +31,6 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
             .then(function (response) {
                 console.log(response);
                 if (response.data.success) {
-                  /*  $scope.todoList.push({
-                        todoText: response.data.data.title,
-                        done: false,
-                        id: response.data.data.id,
-                        priority: response.data.data.priority,
-                        password: response.data.data.password
-                    });*/
 
                   UserService.addTodo(response.data.data.title,false,response.data.data.id,
                     response.data.data.priority,response.data.data.password);
@@ -55,63 +43,37 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
             });
     };
 
-
-    $scope.read = false;
-    $scope.markRead = function () {
-
-         if($scope.read){
-             $http
-             .post("/toDo/markRead?title="+$scope.title1+"&&email="+$scope.email+"&&read="+$scope.read)
-             .then(function(success) {
-
-             //  alert("success task");
-             });  //return successFun(success)
-         }
-     };
-
     $scope.getAllTodos = function () {
 
         if ($scope.userEmail) {
             $http.get("/toDo/getTodoList?email=" + $scope.userEmail)
                 .then(function (response) {
+         /* console.log("calling get from service-->>",ToDoService.get({email:$scope.userEmail}));
+          ToDoService.get({email:$scope.userEmail},function (response) {
 
-                    console.log("loggedinemail-->", $scope.userEmail);
-                    console.log("listtttttttttt-->", response.data);
-                    //     $scope.i = (response.data.lastPriority<0)?1:response.data.lastPriority;
-                    $scope.i = (response.data.lastPriority > 0) ? parseInt(response.data.lastPriority) + 1 : 1;
-                    $scope.todoList = [];
-                    $.each(response.data.data, function (idx, value) {
-                        // $scope.todoList.push({
-                        //     todoText: value.title,
-                        //     done: false,
-                        //     id: value.id,
-                        //     priority: value.priority
-                        // });
+         */     console.log("loggedinemail-->", $scope.userEmail);
+                console.log("listtttttttttt-->", response.data);
+              //     $scope.i = (response.data.lastPriority<0)?1:response.data.lastPriority;
+              $scope.i = (response.data.lastPriority > 0) ? parseInt(response.data.lastPriority) + 1 : 1;
+              //  $scope.todoList = [];
+              $.each(response.data.data, function (idx, value) {
 
-                        UserService.addTodo(value.title,false,value.id,
-                            value.priority,$scope.userPassword);
-                        $scope.todoList = UserService.getAllTodos();
-                    });
-                })
+                  UserService.addTodo(value.title,false,value.id,
+                      value.priority,$scope.userPassword);
+                  $scope.todoList= UserService.getAllTodos();
+                  console.log("todolist in getalltodos------->>",$scope.todoList)
+             });
+              //  })
+          });
         }
     };
 
-
     $scope.delete = function (todo) {
 
-     //   $scope.todoList.splice(this.$index, 1);
         console.log(todo);
         $scope.todoList = UserService.removeTodo(todo);
-        $http.get("/toDo/delete?id=" + todo.id)
-            .then(function (response) {
-                console.log(response);
-            });
-        $.each($scope.todoList, function (idx, val) {
-            $http.get("/toDo/updatePriority?id=" + val.id + "&priority=" + (idx + 1))
-                .then(function (response) {
-                    console.log(response);
-                });
-        });
+
+        ToDoService.Delete.delete({id:todo.id});
     };
 
 
@@ -120,10 +82,8 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
         console.log('editing todo');
         console.log(todo);
         UserService.editTodos(todo,editTodo);
-        $http.get("/toDo/edit?id=" + todo.id+"&text="+todo.todoText)
-        .then(function (response) {
-            console.log(response);
-        });
+
+        ToDoService.Edit.get({id:todo.id,title:todo.todoText});
     };
 
     $scope.getTotalTodos = function () {
@@ -140,6 +100,9 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
                     .then(function (response) {
                         console.log(response);
                     });
+
+             /*  console.log("sorting priority-->>", ToDoService.get({id:val.id,priority:idx + 1}))
+               ToDoService.get({id:val.id,priority:idx + 1});*/
             });
         }
     };
