@@ -1,5 +1,7 @@
 app.factory('UserService', [function () {
 
+//    var loggedInEmail = "";
+  //  var loggedInPassword = "";
     var loggedInEmail = userData ? userData.loggedInEmail : "";
     var loggedInPassword = userData ? userData.loggedInPassword : "";
     var todoList = [];
@@ -13,6 +15,17 @@ app.factory('UserService', [function () {
    this.getPassword = function () {
 
        return loggedInPassword;
+   };
+
+   this.setEmail = function (email) {
+
+       console.log("getemail-->"+email);
+       loggedInEmail=email;
+   };
+
+   this.setPassword = function (password) {
+
+       loggedInPassword=password;
    };
 
    this.addTodo = function (todoText,done,id,priority,password) {

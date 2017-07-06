@@ -26,7 +26,7 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
             "priority" : priority,
             "password": $scope.password
         };
-        $http
+       /* $http
             .post("/toDo/save", JSON.stringify(obj))
             .then(function (response) {
                 console.log(response);
@@ -40,7 +40,18 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
                 } else {
                     alert("tech issue")
                 }
-            });
+            });*/
+
+        ToDoService.Add.POST(obj,function (response) {
+
+            console.log("email-->login", response);
+
+            UserService.addTodo(response.data.title,false,response.data.id,
+                response.data.priority,response.data.password);
+            console.log(UserService.getTodosLength());
+            console.log(UserService.getAllTodos());
+            $scope.todoList = UserService.getAllTodos();
+        });
     };
 
     $scope.getAllTodos = function () {

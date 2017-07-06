@@ -14,7 +14,7 @@ app.controller('LoginController', ["$scope", "$http", "UserService", "$location"
            $scope.userPassword = response.password;
            $scope.loggedInEmail = response.email;
            $scope.loggedInPassword = response.password;
-       })
+       });
     };
 
     $scope.logout = function () {
