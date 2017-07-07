@@ -37,14 +37,16 @@ app.factory('UserService', [function () {
    };
 
    this.removeTodo = function (todo) {
-       console.log(todo);
-       console.log(todoList);
+       console.log("todo in remove-->>",todo);
+       console.log("todolist in remove-->>",todoList);
        for(var i =0;i<todoList.length; i++){
            if(todoList[i].id==todo.id){
                todoList.splice(i, 1);
                return todoList;
            }
        }
+
+       //todoList.splice(todoList.indexOf(todo), 1);
    };
 
     this.editTodos = function (todo, editTodo) {

@@ -31,6 +31,9 @@ class ToDoController {
     }
 
     def updatePriority(int id, int priority){
+
+        println("id in update---->>>>"+id)
+        println("priority in update---->>>>"+priority)
         ToDo todo = ToDo.get(id)
         todo.priority = priority
         todo.save(flush: true)

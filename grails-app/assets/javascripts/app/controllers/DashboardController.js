@@ -89,7 +89,12 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
         stop: function (e, ui) {
 
             $.each($scope.todoList, function (idx, val) {
-                ToDoService.updatePriority.get({id: val.id, priority: (idx + 1)}, function (response) {
+
+                var payload={
+                    id:val.id,
+                    priority:(idx + 1)
+                };
+                ToDoService.updatePriority.get({}, payload, function (response) {
                         console.log(response);
                     });
             });
