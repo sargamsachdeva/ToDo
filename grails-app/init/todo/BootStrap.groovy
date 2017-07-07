@@ -3,19 +3,33 @@ package todo
 class BootStrap {
 
     def init = { servletContext ->
+        def adminRole = new Role(authority: 'ROLE_USER').save()
 
-        List<User> userList = createUser()
+        def testUser = new User(username: 'sargamsachdeva', password: 'password').save()
+
+       // def todo=new ToDo(title: 'todo1',email: testUser.username,password: testUser.password,priority: 1).save()
+
+        UserRole.create testUser, adminRole
+
+        UserRole.withSession {
+            it.flush()
+            it.clear()
+        }
+
+
+      //  List<TempUser> userList = createUser()
 
     }
     def destroy = {
     }
+/*
 
-    List<User> createUser() {
+    List<TempUser> createUser() {
 
-        List<User> users = []
+        List<TempUser> users = []
 
-        User normalUser = new User(email: "sargam.sachdeva@tothenew.com",active: true)
-        Integer countUsers = User.count()
+        TempUser normalUser = new TempUser(email: "sargam.sachdeva@tothenew.com",active: true)
+        Integer countUsers = TempUser.count()
 
         if (!countUsers) {
 
@@ -32,9 +46,10 @@ class BootStrap {
 
         } else {
             log.info "Users exists in the system "
-            users = User.findAll("from User")
+            users = TempUser.findAll("from TempUser")
         }
         return users
     }
+*/
 
 }

@@ -52,6 +52,10 @@
         <h1 style="margin-left: 250px">ToDo App</h1>
     </div>
 
+  %{--  <div>
+        ${(loggedInEmail)}
+    </div>--}%
+
     <ui-view></ui-view>
 
 </div>

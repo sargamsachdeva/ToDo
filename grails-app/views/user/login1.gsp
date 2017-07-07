@@ -52,30 +52,32 @@ var userData = {
 
                         <div class="col-xs-6 col-xs-offset-1">
                             <input type="text" class="form-control" name="email" ng-model="email" id="email"
-                                   placeholder="Email" ng-required="true" type="email" ng-hide="loggedInEmail">
-
-                            <p class="form-control-static" ng-show="loggedInEmail">{{loggedInEmail}}</p>
+                                   placeholder="Email" ng-required="true" type="email" ng-show="loggedInEmail">
+                            ${(loggedInEmail)}
+                            <p class="form-control-static ng-show" ng-show="loggedInEmail"> ${(loggedInEmail)}</p>
                         </div>
                     </div>
 
-                    <div class="form-group" ng-class="{ 'has-error' : todoForm.password.$invalid}">
+                    <div class="col-xs-6 col-xs-offset-1" ng-model="password">
+                    </div>
+                    %{--<div class="form-group" ng-class="{ 'has-error' : todoForm.password.$invalid}">
                         <label for="password" class="control-label col-xs-3">Password:-</label>
 
-                        <div class="col-xs-6 col-xs-offset-1">
+                        <div class="col-xs-6 col-xs-offset-1" ng-model="password">
                             <input type="password" class="form-control" name="password" ng-model="password"
                                    id="password"
                                    placeholder="Password" ng-required="true" ng-hide="loggedInPassword">
 
-                            %{--<p class="form-control-static" ng-show="loggedInPassword">{{loggedInPassword}}</p>--}%
+                            --}%%{--<p class="form-control-static" ng-show="loggedInPassword">{{loggedInPassword}}</p>--}%%{--
                         </div>
                     </div>
-
-                    <div class="col-xs-offset-4 col-md-6" ng-hide="loggedInEmail">
+--}%
+                    %{--<div class="col-xs-offset-4 col-md-6" ng-hide="loggedInEmail">
                         <button class="btn btn-block btn-success" type="submit" ng-click="login()" ui-sref="dashboard"
                                 ng-disabled="todoForm.$invalid">Login
                         </button>
                     </div>
-
+--}%
                     %{--<div class="col-xs-offset-4 col-md-6" ng-show="loggedInEmail">
                         <button class="btn btn-block btn-danger" type="submit" ng-click="logout()">Logout
                         </button>
@@ -84,7 +86,32 @@ var userData = {
             </div>
         </div>
 
-        %{--<ui-view></ui-view>--}%
+        <div class="panel panel-primary" style="margin-top: 100px">
+            <div class="panel-heading todo-heading">
+                <span class="panel-title">Add ToDo</span>
+            </div>
+            <div class="panel panel-body todo-body">
+                <form class="form-horizontal" name="todoForm1" id="todoForm1" ng-submit="add()">
+
+                    <div class="form-group"
+                         ng-class="{ 'has-error' : todoForm1.title.$invalid}">
+                        <label for="title" class="control-label col-xs-3">Title:-</label>
+                        <div class="col-xs-6 col-xs-offset-1">
+                            <input type="text" class="form-control" name="title" ng-model="title1"
+                                   id="title"
+                                   placeholder="Todo Tasks" ng-minlength="4" ng-required="true">
+                            <p ng-show="todoForm1.todo-title.$error.minlength" class="help-block">Todo length is shorter than required</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-offset-4 col-md-6">
+                        <button class="btn btn-block btn-success" type="submit" ng-disabled="todoForm1.$invalid">Add
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+
+            %{--<ui-view></ui-view>--}%
 
 
         %{-- <div class="panel panel-default">
@@ -235,6 +262,7 @@ var userData = {
         </div>
 
     </div>--}%
+</div>
 </div>
 </body>
 </html>

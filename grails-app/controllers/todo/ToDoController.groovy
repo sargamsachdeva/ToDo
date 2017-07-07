@@ -12,11 +12,11 @@ class ToDoController {
 ;
     def save() {
         def obj = request.JSON
-        println("title->"+obj)
+        println("object----->"+obj)
         println("email->"+obj.email)
         println("password is---->>"+obj.password)
 
-        ToDo toDo = new ToDo(title: obj.title,email:session.email,priority: obj.priority,password: session.password)
+        ToDo toDo = new ToDo(title: obj.title,email:getPrincipal().username,priority: obj.priority,password: getPrincipal().password)
 
         if(toDo.validate()){
 

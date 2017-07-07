@@ -5,6 +5,7 @@ class ToDo {
 
     String title
     String email
+    //User username
     String password
     Integer priority
 

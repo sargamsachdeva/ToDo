@@ -1,17 +1,20 @@
 package todo
 
 import grails.converters.JSON
+import grails.plugin.springsecurity.annotation.Secured
 
+
+@Secured('ROLE_USER')
 class UserController {
 
     def index() {
 
-        if(session.user){
+        if(isLoggedIn()){
 
-        }
-
-        else{
-            render(view: 'index1', model: [loggedInEmail: session.email,loggedInPassword:session.password])
+           // String email = authenticatedUser.email
+            String username= getPrincipal().username
+            println("username;;;;;;;;;;;;;;"+username)
+            render(view: 'index1', model: [loggedInEmail:  getPrincipal().username,loggedInPassword:getPrincipal().password])
         }
     }
 
@@ -43,10 +46,16 @@ class UserController {
     }
 
    def login1(String email){
+
+       if(isLoggedIn()){
+
+           // String email = authenticatedUser.email
+           String username= getPrincipal().username
+           println("username;;;;;;;;;;;;;;"+username)
        session.email = email
 
-       render (view:'login1',model: [loggedInEmail: session.email])
-   }
+       render (view:'login1',model: [loggedInEmail: username])
+   }}
     def dashboard(){
 
         render(view:'dashboard')

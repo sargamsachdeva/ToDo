@@ -22,9 +22,9 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
         console.log("read:----" + priority);
         var obj  = {
             "title": $scope.title1,
-            "email": $scope.email,
+            "email": $scope.userEmail,
             "priority" : priority,
-            "password": $scope.password
+            "password": $scope.userPassword
         };
 
         ToDoService.Add.POST(obj,function (response) {
@@ -95,6 +95,7 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
                     priority:(idx + 1)
                 };
                 ToDoService.updatePriority.get({}, payload, function (response) {
+               // ToDoService.updatePriority.get({key: val.id, priority: (idx + 1)}, function (response) {
                         console.log(response);
                     });
             });
