@@ -35,7 +35,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             name: 'login1',
             url: '/user/login1',
             templateUrl: '/user/login1.html',
-            controller: 'LoginController'
+            controller: 'DashboardController'
         })
 });
 

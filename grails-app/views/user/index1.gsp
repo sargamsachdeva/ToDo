@@ -57,7 +57,6 @@
     </div>--}%
 
     <ui-view></ui-view>
-
 </div>
     %{--<a ui-sref="login1">Login</a>
     <ui-view></ui-view>

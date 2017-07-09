@@ -1,11 +1,14 @@
 package todo
 
 import grails.converters.JSON
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.annotation.Secured
 
 
 @Secured('ROLE_USER')
 class UserController {
+
+    SpringSecurityService springSecurityService
 
     def index() {
 
@@ -13,8 +16,11 @@ class UserController {
 
            // String email = authenticatedUser.email
             String username= getPrincipal().username
-            println("username;;;;;;;;;;;;;;"+username)
-            render(view: 'index1', model: [loggedInEmail:  getPrincipal().username,loggedInPassword:getPrincipal().password])
+            String password=getAuthenticatedUser().password
+            println("username in user index;;;;;;;;;;;;;;"+username)
+            println("password in user index;;;;;;;;;"+password)
+
+            render(view: 'index1', model: [loggedInEmail:  getPrincipal().username,loggedInPassword:password])
         }
     }
 
@@ -52,13 +58,20 @@ class UserController {
            // String email = authenticatedUser.email
            String username= getPrincipal().username
            println("username;;;;;;;;;;;;;;"+username)
-       session.email = email
 
-       render (view:'login1',model: [loggedInEmail: username])
+           email = getPrincipal().username
+                   // session.email = email
+
+           println("password in login1;;;;;;;;;"+getAuthenticatedUser().password)
+
+       render (view:'login1',model: [loggedInEmail: getPrincipal().username,loggedInPassword:getAuthenticatedUser().password])
    }}
     def dashboard(){
 
         render(view:'dashboard')
     }
+    def getLoggedInEmail(){
 
+        render([email: getAuthenticatedUser().username?: 'null' ] as JSON)
+    }
 }

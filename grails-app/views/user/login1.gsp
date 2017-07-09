@@ -37,7 +37,7 @@ var userData = {
 --}%</head>
 
 <body>
-<div class="container">
+<div class="container" ng-init="init()">
 
     <div class="col-md-6">
         <div class="panel panel-primary">
@@ -263,6 +263,63 @@ var userData = {
 
     </div>--}%
 </div>
+
+    <div class="todo-wrapper">
+        <h2>You've got <span class="emphasis">{{getTotalTodos()}}</span> things to do</h2>
+    </div>
+
+    <div class="col-xs-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span class="panel-title">My Todos</span>
+            </div>
+            <div class="panel-body" ui-sortable="sortableOptions" ng-model="todoList">
+                <div ng-repeat="todo in todoList track by $index">
+                    %{-- <input type="checkbox" ng-model="x.done"> <span ng-bind="x.todoText"></span>
+                         <button ng-click="delete()">x</button>--}%
+
+                    <div ng-if="!todo.read">
+                        <div class="well">
+                            <div ng-hide="todo.editTask">
+                                <div class="row">
+                                    <span class="pull-left" ng-bind="todo.todoText"></span>
+                                    <a ng-click="delete(todo)" class="fa fa-trash pull-right fa-lg"
+                                       aria-hidden="true"
+                                       title="Delete"></a>
+                                </div>
+
+                                <div class="row">
+                                    <span ng-hide="todo.read">
+                                        <a ng-click="todo.read=true" title="UnRead"><span class="fa fa-square-o"></span></a>
+                                    </span>
+                                    <span ng-show="todo.read">
+                                        <a ng-click="todo.read=false" title="Read" ><span class="fa fa-check-square"></span></a>
+                                    </span>
+                                    {{title}}
+
+                                    <a ng-click="todo.editTask=true" class="fa fa-pencil-square fa-lg pull-right"
+                                       aria-hidden="true" title="Edit"> </a>
+                                </div>
+
+                            </div>
+
+                            <div ng-show="todo.editTask">
+                                <form ng-submit="edit(todo)" name="editTodo" class="editForm form-group">
+
+                                    <input type="text" ng-model="todo.todoText" value={{todo.todoText}} placeholder={{todo.todoText}}
+                                           class="form-control form-group"
+                                           ng-required="true"
+                                           id="title-todo">
+                                    <button class="btn btn-success btn-block" type="submit" >Edit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 </body>
 </html>

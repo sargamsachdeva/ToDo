@@ -1,7 +1,9 @@
 package todo
 
 import grails.converters.JSON
+import grails.plugin.springsecurity.annotation.Secured
 
+@Secured('ROLE_USER')
 class ToDoController {
 
     def index(){
@@ -9,15 +11,16 @@ class ToDoController {
         println("todo index")
         render "hello"
     }
-;
+
     def save() {
         def obj = request.JSON
-        println("object----->"+obj)
+        println("object----->"+obj.title)
         println("email->"+obj.email)
-        println("password is---->>"+obj.password)
+        println("password is---->>"+getAuthenticatedUser().password)
 
-        ToDo toDo = new ToDo(title: obj.title,email:getPrincipal().username,priority: obj.priority,password: getPrincipal().password)
+        ToDo toDo = new ToDo(title: obj.title,email:getPrincipal().username,priority: obj.priority,password: getAuthenticatedUser().password)
 
+        println("tood object------>>>>>"+toDo)
         if(toDo.validate()){
 
             if(toDo.save(flush:true)){

@@ -19,13 +19,15 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
         var priority = $scope.i++;
 
         console.log("list:----", $scope.todoList);
-        console.log("read:----" + priority);
+        console.log("read:----;;;;;;;;;;;;   " + priority);
         var obj  = {
             "title": $scope.title1,
             "email": $scope.userEmail,
             "priority" : priority,
             "password": $scope.userPassword
         };
+
+        console.log("obj is======= ",obj);
 
         ToDoService.Add.POST(obj,function (response) {
 

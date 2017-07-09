@@ -1,4 +1,4 @@
-app.controller('LoginController', ["$scope", "$http", "UserService", "$location", "$rootScope","LoginService", function ($scope, $http, UserService, $location, $rootScope,LoginService) {
+app.controller('LoginController', ["$scope", "$http", "UserService", "$location", "$rootScope","LoginService","ToDoService", function ($scope, $http, UserService, $location, $rootScope,LoginService,ToDoService) {
 
     $scope.userEmail = UserService.getEmail();
     $scope.userPassword = UserService.getPassword();
@@ -15,7 +15,7 @@ app.controller('LoginController', ["$scope", "$http", "UserService", "$location"
            $scope.loggedInEmail = response.email;
            $scope.loggedInPassword = response.password;
        });
-    };
+    };// iska ui kaha h?
 
     $scope.logout = function () {
        /* if(!$rootScope.loggedInEmail){
@@ -35,5 +35,8 @@ app.controller('LoginController', ["$scope", "$http", "UserService", "$location"
 
         });
     };
+
+  
+
 
 }]);
