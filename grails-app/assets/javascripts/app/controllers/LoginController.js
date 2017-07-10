@@ -18,9 +18,7 @@ app.controller('LoginController', ["$scope", "$http", "UserService", "$location"
     };
 
     $scope.logout = function () {
-       /* if(!$rootScope.loggedInEmail){
-            $location.path("/user/login1");
-        }*/
+
         $http
             .post("/user/logout?email=" + $scope.userEmail)
             .then(function (response) {

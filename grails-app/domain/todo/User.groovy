@@ -50,4 +50,6 @@ class User implements Serializable {
 	static mapping = {
 		password column: '`password`'
 	}
+
+	static hasMany = [todo:ToDo]
 }

@@ -4,6 +4,7 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
 
     $scope.userEmail = UserService.getEmail();
     $scope.userPassword = UserService.getPassword();
+    $scope.loggedInUserId=UserService.getloggedInUserId();
     $scope.i = 1;
     $scope.todoList = [];
     $scope.read= false;
@@ -13,12 +14,10 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
             $scope.getAllTodos();
         }
 
-    }
+    };
         $scope.logout = function () {
-        /* if(!$rootScope.loggedInEmail){
-         $location.path("/user/login1");
-         }*/
-                $scope.userEmail=undefined;
+
+            $scope.userEmail=undefined;
             $window.location.href="/user/logout?email=" + $scope.userEmail;
     };
 
@@ -54,7 +53,8 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
 
         if ($scope.userEmail) {
 
-            ToDoService.GetToDoList.get({email:$scope.userEmail},function (response) {
+            console.log("id-----------;;;;;;;",$scope.loggedInUserId);
+            ToDoService.GetToDoList.get({id:$scope.loggedInUserId},function (response) {
                 console.log("loggedinemail-->", $scope.userEmail);
                 console.log("listtttttttttt-->", response);
                 $scope.i = (response.data.lastPriority > 0) ? parseInt(response.data.lastPriority) + 1 : 1;

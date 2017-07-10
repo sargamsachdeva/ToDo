@@ -3,6 +3,7 @@ package todo
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 
+
 @Secured('ROLE_USER')
 class ToDoController {
 
@@ -18,9 +19,9 @@ class ToDoController {
         println("email->"+obj.email)
         println("password is---->>"+getAuthenticatedUser().password)
 
-        ToDo toDo = new ToDo(title: obj.title,email:getPrincipal().username,priority: obj.priority,password: getAuthenticatedUser().password)
+        ToDo toDo = new ToDo(title: obj.title,priority: obj.priority,createdBy: User.get(getPrincipal().id))
 
-        println("tood object------>>>>>"+toDo)
+        println("todo object------>>>>>"+toDo)
         if(toDo.validate()){
 
             if(toDo.save(flush:true)){
@@ -43,19 +44,19 @@ class ToDoController {
         render(["success": true] as JSON)
     }
 
-    def getTodoList(String email){
+    def getTodoList(User createdBy){
 
-        List<ToDo> list =ToDo.findAllByEmail(email, [sort: 'priority', order: 'asc'])
+        List<ToDo> list = ToDo.findAllByCreatedBy(createdBy)
 
-        println("email-->"+email)
+        println("user-->"+createdBy)
         println("list-->"+list)
 
-        def priorityCounter = ToDo.where{email == email}.list(sort: 'priority', order: 'desc', max: 1, offset: 0).priority
+        def priorityCounter = ToDo.where{createdBy == createdBy}.list(sort: 'priority', order: 'desc', max: 1, offset: 0).priority
         def res = [
                 "lastPriority": priorityCounter,
                 "data": list
         ]
-        render res as JSON
+        render (res as JSON)
     }
 
     def delete(int id) {

@@ -4,9 +4,9 @@ package todo
 class ToDo {
 
     String title
-    String email
-    //User username
-    String password
+ //   String email
+    User createdBy
+  //  String password
     Integer priority
 
     static constraints = {
@@ -14,4 +14,6 @@ class ToDo {
         title blank: false,minSize: 3
         priority nullable:false, default: 0
     }
+
+    static belongsTo = [createdBy:User]
 }

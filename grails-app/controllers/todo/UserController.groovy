@@ -14,13 +14,12 @@ class UserController {
 
         if(isLoggedIn()){
 
-           // String email = authenticatedUser.email
             String username= getPrincipal().username
             String password=getAuthenticatedUser().password
             println("username in user index;;;;;;;;;;;;;;"+username)
             println("password in user index;;;;;;;;;"+password)
 
-            render(view: 'index1', model: [loggedInEmail:  getPrincipal().username,loggedInPassword:password])
+            render(view: 'index1', model: [loggedInEmail:  getPrincipal().username,loggedInPassword:password,loggedInUserId:getPrincipal().id])
         } else{
 
             redirect(url: '/login/index');
@@ -37,12 +36,7 @@ class UserController {
         session.email = obj.email
         session.password=obj.password
 
-       // response.sendError(500)
-
         render(["success": true, email: obj.email,password:obj.password] as JSON)
-
-        //response<<"success"
-        //forward(controller: 'toDo', action: 'index',params:[email:email])
     }
 
 
@@ -68,10 +62,6 @@ class UserController {
            println("password in login1;;;;;;;;;"+getAuthenticatedUser().password)
 
        render (view:'login1',model: [loggedInEmail: getPrincipal().username,loggedInPassword:getAuthenticatedUser().password])
-   }
-       else{
-
-           render "please login"
        }
    }
     def dashboard(){

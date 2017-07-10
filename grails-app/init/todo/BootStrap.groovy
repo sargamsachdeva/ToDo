@@ -3,13 +3,16 @@ package todo
 class BootStrap {
 
     def init = { servletContext ->
-        def adminRole = new Role(authority: 'ROLE_USER').save()
+        def userRole = new Role(authority: 'ROLE_USER').save()
 
-        def testUser = new User(username: 'sargamsachdeva', password: 'password').save()
+      //  def testUser = new User(username: 'sargamsachdeva', password: 'password').save()
 
-       // def todo=new ToDo(title: 'todo1',email: testUser.username,password: testUser.password,priority: 1).save()
+        def testUser2 = new User(username: 'priya', password: '123456').save()
 
-        UserRole.create testUser, adminRole
+        // def todo=new ToDo(title: 'todo1',email: testUser.username,password: testUser.password,priority: 1).save()
+
+     //   UserRole.create testUser, userRole
+        UserRole.create testUser2, userRole
 
         UserRole.withSession {
             it.flush()

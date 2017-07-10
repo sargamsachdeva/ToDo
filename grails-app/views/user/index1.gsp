@@ -13,7 +13,6 @@
     <asset:javascript src="angular.min.js"/>
     <asset:javascript src="app/app.js"/>
     <asset:javascript src="bootstrap.js"/>
-    <asset:javascript src="app/controllers/UserController.js"/>
     <asset:javascript src="app/controllers/LoginController.js"/>
     <asset:javascript src="app/controllers/DashboardController.js"/>
     <asset:javascript src="app/service/UserService.js"/>
@@ -32,7 +31,8 @@
     <script>
 
     var userData = {
-        loggedInEmail: "${raw(loggedInEmail)}"
+        loggedInEmail: "${raw(loggedInEmail)}",
+        loggedInUserId:"${loggedInUserId}"
     }
 
 </script>
