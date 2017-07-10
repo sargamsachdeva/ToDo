@@ -15,14 +15,14 @@ app.controller('LoginController', ["$scope", "$http", "UserService", "$location"
            $scope.loggedInEmail = response.email;
            $scope.loggedInPassword = response.password;
        });
-    };// iska ui kaha h?
+    };
 
     $scope.logout = function () {
        /* if(!$rootScope.loggedInEmail){
             $location.path("/user/login1");
         }*/
         $http
-            .post("/user/logout?email=" + $scope.email)
+            .post("/user/logout?email=" + $scope.userEmail)
             .then(function (response) {
 
                 //  alert("success logout")

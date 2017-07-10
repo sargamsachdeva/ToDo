@@ -38,7 +38,10 @@ var userData = {
 
 <body>
 <div class="container" ng-init="init()">
-
+    <div class="col-md-2 pull-right">
+        <button class="btn btn-block btn-danger" type="submit" ng-click="logout()">Logout
+        </button>
+    </div>
     <div class="col-md-6">
         <div class="panel panel-primary">
             <div class="panel-heading todo-heading">
@@ -318,6 +321,57 @@ var userData = {
                 </div>
             </div>
         </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading custom-heading">
+                <span class="panel-title">Done Todos</span>
+            </div>
+
+            <div class="panel-body custom-body">
+                <div ng-repeat="todo in todoList track by $index">
+
+                    <div ng-if="todo.read">
+
+                        <div ng-hide="todo.editTask">
+                            <div class="row">
+                                <span class="pull-left" ng-bind="todo.todoText"></span>
+                                <a ng-click="delete(todo)" class="fa fa-trash pull-right fa-lg" aria-hidden="true"
+                                   title="Delete"></a>
+                            </div>
+                            <div class="row">
+                                <span ng-hide="todo.read">
+                                    <a ng-click="todo.read=true" ng-model="todo.read" title="UnRead"><span class="fa fa-square-o"></span></a>
+                                </span>
+                                <span ng-show="todo.read">
+                                    <a ng-click="todo.read=false" title="Read"><span class="fa fa-check-square"></span></a>
+                                </span>
+                                {{title }}
+                            </div>
+
+                            %{--
+                                                            <div class="row">
+                                                                <span ng-show="todo.read">
+                                                                    <input type="checkbox"  ng-model="todo.read.value1" title="UnRead">
+                                                                    <span>{{todo.read.value1}}</span>
+                                                                </span>
+
+                                                                <span ng-hide="todo.read">
+                                                                    <input type="checkbox" ng-model="todo.read.value2"
+                                                                           title="Read">
+                                                                </span>
+                                                                {{title}}
+
+                                                                <a ng-click="todo.editTask=true" class="fa fa-pencil-square fa-lg pull-right"
+                                                                   aria-hidden="true" title="Edit"> </a>
+                                                            </div>
+                            --}%
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </div>

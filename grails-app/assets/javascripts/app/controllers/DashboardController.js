@@ -1,4 +1,5 @@
-app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootScope","ToDoService", function ($scope, $http, UserService, $rootScope,ToDoService) {
+app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootScope","ToDoService","$location", "$window",
+    function ($scope, $http, UserService, $rootScope,ToDoService,$location, $window) {
 
 
     $scope.userEmail = UserService.getEmail();
@@ -11,6 +12,14 @@ app.controller('DashboardController', ["$scope", "$http", "UserService", "$rootS
         if ($scope.userEmail) {
             $scope.getAllTodos();
         }
+
+    }
+        $scope.logout = function () {
+        /* if(!$rootScope.loggedInEmail){
+         $location.path("/user/login1");
+         }*/
+                $scope.userEmail=undefined;
+            $window.location.href="/user/logout?email=" + $scope.userEmail;
     };
 
     $scope.add = function () {

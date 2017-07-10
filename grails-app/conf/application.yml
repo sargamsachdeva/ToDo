@@ -7,7 +7,12 @@ grails:
         transactionManagement:
             proxies: false
 
-
+    plugin:
+       springsecurity:
+                   logout:
+                         postOnly: false
+                   apf:
+                         storeLastUsername: true
     gorm:
         # Whether to autowire entities. 
         # Disabled by default for performance reasons.
@@ -137,3 +142,4 @@ dataSource:
     username: root
     dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     password: tiger
+

@@ -21,8 +21,12 @@ class UserController {
             println("password in user index;;;;;;;;;"+password)
 
             render(view: 'index1', model: [loggedInEmail:  getPrincipal().username,loggedInPassword:password])
+        } else{
+
+            redirect(url: '/login/index');
         }
     }
+
 
     def login(){
         def obj = request.JSON
@@ -42,13 +46,12 @@ class UserController {
     }
 
 
-    def logout(String email){
+    def logout(String email) {
 
-        println("logoutt")
+            println("logoutt")
+          //  session.email = null
 
-        println("!email--->"+!email)
-        session.email = null
-        render(["success": true,email: session.email] as JSON)
+         redirect(url: '/logout/index')
     }
 
    def login1(String email){
@@ -65,7 +68,12 @@ class UserController {
            println("password in login1;;;;;;;;;"+getAuthenticatedUser().password)
 
        render (view:'login1',model: [loggedInEmail: getPrincipal().username,loggedInPassword:getAuthenticatedUser().password])
-   }}
+   }
+       else{
+
+           render "please login"
+       }
+   }
     def dashboard(){
 
         render(view:'dashboard')
